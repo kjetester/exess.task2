@@ -175,7 +175,7 @@ public class RestApiTest extends BaseTest {
 	}
 
 	@Test(
-		dependsOnMethods = "testSavingDataJsonWithLength",
+		dependsOnMethods = "testSuccessAuth",
 		priority = 5
 	)
 	public void testFailSavingDataIfTokenIsExpired() throws SQLException, InterruptedException {
