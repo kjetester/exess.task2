@@ -12,7 +12,6 @@
 
 ## Run:
  `mvn clean test -Ddbpath="<path to the sqlite database file>"`
- `mvn clean test -Ddbpath="/Users/juliankolodzey/projects/main.db"`
 
 ## Reporting:
 The test seport should be available at /task2/target/surefire-reports/index.html as soon as the test run will be finished.
