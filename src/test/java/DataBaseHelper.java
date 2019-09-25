@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -24,10 +25,12 @@ class DataBaseHelper {
 	 * @return result set as map
 	 * @throws SQLException SQLException
 	 */
-	Map<String, String> getStoredValues() throws SQLException {
+	Map<String, String> getStoredValues(String id) throws SQLException {
 		checkConnection();
-		Map<String, String> rsMap = new HashMap<String, String>();
-		ResultSet resultSet = dbConnection.createStatement().executeQuery("select * from uploads where id = (select max(id) from uploads)");
+		Map<String, String> rsMap = new HashMap<>();
+		PreparedStatement ps = dbConnection.prepareStatement("select * from uploads where id = ?");
+		ps.setString(1, id);
+		ResultSet resultSet = ps.executeQuery();
 		if (resultSet.next()) {
 			rsMap.put("login", resultSet.getString(2));
 			rsMap.put("payload", resultSet.getString(3));

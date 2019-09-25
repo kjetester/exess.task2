@@ -1,4 +1,5 @@
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.DataProvider;
@@ -72,19 +73,21 @@ public class RestApiTest extends BaseTest {
 	)
 	public void testSavingDataJsonWithLength(int length) throws NoSuchAlgorithmException, SQLException {
 		payload = tdHelper.genPayload(length);
-		given()
+		Response response = given()
 			.spec(requestSpecification)
 			.contentType(ContentType.JSON)
 			.header("Authorization", token)
 			.body("{\"payload\": \"" + payload + "\"}")
-		.when()
-			.post(SAVE_DATA_METHOD)
-		.then()
-			.statusCode(HttpStatus.SC_OK)
-			.extract().path("status").equals("OK");
-		Map<String, String> storedValues = dbHelper.getStoredValues();
-		Assertions.assertThat(storedValues.get("login")).isEqualToIgnoringCase(LOGIN);
-		Assertions.assertThat(storedValues.get("payload")).isEqualToIgnoringCase(tdHelper.getEncryptedPayload(payload));
+			.post(SAVE_DATA_METHOD);
+		response.then().statusCode(HttpStatus.SC_OK);
+		if (response.then().extract().path("status").equals("OK")) {
+			String id = Integer.toString(response.then().extract().path("id"));
+			Map<String, String> storedValues = dbHelper.getStoredValues(id);
+			Assertions.assertThat(storedValues.get("login")).isEqualToIgnoringCase(LOGIN);
+			Assertions.assertThat(storedValues.get("payload")).isEqualToIgnoringCase(tdHelper.getEncryptedPayload(payload));
+		} else {
+			Assertions.fail("Service says: '" + response.then().extract().path("error") + "'");
+		}
 	}
 
 	@Test(
@@ -94,26 +97,29 @@ public class RestApiTest extends BaseTest {
 	)
 	public void testSavingDataUrlencodedWithLength(int length) throws NoSuchAlgorithmException, SQLException {
 		payload = tdHelper.genPayload(length);
-		given()
+			Response response = given()
 			.spec(requestSpecification)
 			.contentType(ContentType.URLENC)
 			.header("Authorization", token)
 			.body("payload=" + payload)
-		.when()
-			.post(SAVE_DATA_METHOD)
-		.then()
-			.statusCode(HttpStatus.SC_OK)
-			.extract().path("status").equals("OK");
-		Map<String, String> storedValues = dbHelper.getStoredValues();
-		Assertions.assertThat(storedValues.get("login")).isEqualToIgnoringCase(LOGIN);
-		Assertions.assertThat(storedValues.get("payload")).isEqualToIgnoringCase(tdHelper.getEncryptedPayload(payload));
+			.post(SAVE_DATA_METHOD);
+		response.then().statusCode(HttpStatus.SC_OK);
+		if (response.then().extract().path("status").equals("OK")) {
+			String id = Integer.toString(response.then().extract().path("id"));
+			Map<String, String> storedValues = dbHelper.getStoredValues(id);
+			Assertions.assertThat(storedValues.get("login")).isEqualToIgnoringCase(LOGIN);
+			Assertions.assertThat(storedValues.get("payload")).isEqualToIgnoringCase(tdHelper.getEncryptedPayload(payload));
+		} else {
+			Assertions.fail("Service says: '" + response.then().extract().path("error") + "'");
+		}
 	}
 
 	@DataProvider(name = "PayloadLength")
 	public static Object[][] payloadLength() {
 		return new Object[][] {
 			{1},
-			{50}};
+			{50}
+		};
 	}
 
 	@Test(
