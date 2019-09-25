@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite1" parallel="classes" thread-count="4">
+
+    <test name="API Test Suite">
+        <classes>
+            <class name="RestApiTest" />
+        </classes>
+    </test>
+
+</suite>
