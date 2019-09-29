@@ -1,7 +1,8 @@
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.xml.bind.*;
-import java.security.*;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class TestDataHelper {
 

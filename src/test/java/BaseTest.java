@@ -6,6 +6,9 @@ import org.testng.annotations.Parameters;
 
 import java.sql.SQLException;
 
+/**
+ * Base test class.
+ */
 public class BaseTest {
 
 	protected static final String LOGIN = "supertest";
@@ -15,7 +18,6 @@ public class BaseTest {
 	protected TestDataHelper tdHelper = new TestDataHelper();
 
 	protected static String token = "";
-	protected static String payload;
 	protected long tokenExpirationTime;
 
 	protected RequestSpecification requestSpecification;

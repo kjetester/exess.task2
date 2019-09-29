@@ -11,7 +11,7 @@
 8. test access token expiration
 
 ## Run:
- `mvn clean test -Ddbpath="<path to the sqlite database file>"`
+ `mvn test -Ddbpath="<path to the sqlite database file>"`
 
 ## Reporting:
-The test seport should be available at /task2/target/surefire-reports/index.html as soon as the test run will be finished.
+ `mvn io.qameta.allure:allure-maven:serve`
