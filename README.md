@@ -1,4 +1,9 @@
-# Task 2
+## Test object deployment
+1. install python -> python virtualenv
+2. run the following commands to create new python virtual environment -> virtualenv venv
+3. install script dependencies venv/bin/pip -> install sqlalchemy bottle
+4. create local database structure -> venv/bin/python superservice.py migrate
+5. start local web service -> venv/bin/python superservice.py run
 
 ## Tests:
 1. test /ping method
