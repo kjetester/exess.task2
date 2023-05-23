@@ -15,7 +15,7 @@
         <java.version>8</java.version>
         <rest-assured.version>4.1.1</rest-assured.version>
         <testng.version>7.0.0</testng.version>
-        <sqlite-jdbc.version>3.28.0</sqlite-jdbc.version>
+        <sqlite-jdbc.version>3.41.2.2</sqlite-jdbc.version>
         <assertj.version>3.13.2</assertj.version>
         <slf4j.version>1.7.28</slf4j.version>
         <aspectj.version>1.8.10</aspectj.version>
